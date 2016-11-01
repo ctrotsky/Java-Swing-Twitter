@@ -44,7 +44,6 @@ public class AdminPanel extends TwitterForm implements ActionListener{
     private JLabel userGroupManagementTitle;
     
     private AdminPanel(){
-        init();
         System.out.println("Admin Panel Constructed");
     }
     
@@ -69,7 +68,7 @@ public class AdminPanel extends TwitterForm implements ActionListener{
     * 
     * Sets up the form and initializes all components.
     */
-    private void init(){
+    public void init(){
         getContentPane().setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
