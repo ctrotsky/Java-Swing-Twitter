@@ -1,21 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package twitter;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.*;
 
-/**
- *
- * @author Colin
- * 
- */
 public class AdminPanel extends TwitterForm implements ActionListener{
 
     private static AdminPanel INSTANCE;
@@ -30,7 +20,9 @@ public class AdminPanel extends TwitterForm implements ActionListener{
     private JLabel visitorButtonsTitle;
     
     private JPanel treeViewPanel;
-    private JTree treeView;
+    private DefaultMutableTreeNode rootNode;
+    private DefaultTreeModel treeModel;
+    private JTree tree;
     private JButton openUserView;
     private JLabel treeViewTitle;
     
@@ -111,17 +103,19 @@ public class AdminPanel extends TwitterForm implements ActionListener{
         /////////////////////////////////////////////
         // Tree View Panel
         // =========================================
-        // Trees: treeView
+        // Trees: tree
         // Buttons: openUserView 
         // Labels: treeViewTitle
         /////////////////////////////////////////////
         treeViewPanel = new JPanel();
         panelLayout(treeViewPanel, 10, 10, 210, 351);
         
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Root");
-        treeView = new JTree(root);
-        treeLayout(treeView, 10, 40, 190, 255);
-        treeViewPanel.add(treeView);
+        rootNode = new DefaultMutableTreeNode("Root");
+        treeModel = new DefaultTreeModel(rootNode);
+        tree = new JTree(rootNode);
+        treeLayout(tree, 10, 40, 190, 255);
+        treeViewPanel.add(tree);
+        rootNode.add(new DefaultMutableTreeNode("lol"));
         
         openUserView = new JButton("Open User View");
         buttonLayout(openUserView, 10, 305, 190, 35, treeViewPanel);

@@ -17,6 +17,10 @@ public class Driver {
     public static void main(String[] args) {
         // TODO code application logic here
         AdminPanel.getInstance().init();
+        
+        
+        UserView userView = new UserView(new User());
+        userView.init();
     }
     
 }
