@@ -121,7 +121,7 @@ public class UserView extends TwitterForm {
         tweetTextField.setBounds(10, 50, 185, 35);
         newsFeedPanel.add(tweetTextField);
         
-        newsFeedListModel = new DefaultListModel(); //addElement(tweetTextField) to this to add tweets
+        newsFeedListModel = new DefaultListModel();
         newsFeedList = new JList(newsFeedListModel);
         
         newsFeedScrollPane = new JScrollPane(newsFeedList);
@@ -143,7 +143,7 @@ public class UserView extends TwitterForm {
     }
     
     public void addTweetToNewsFeed(String tweet){
-        newsFeedListModel.addElement(tweet);
+        newsFeedListModel.add(0, tweet);
     }
     
     public void postTweet(){
