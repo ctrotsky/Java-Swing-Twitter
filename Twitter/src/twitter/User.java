@@ -44,7 +44,6 @@ class User extends Subject implements Observer{
     }
     
     public void postTweet(String tweet){
-        //User should follow themself too so they can see their own tweets
         latestTweet = tweet;
         notifyObservers();
     }

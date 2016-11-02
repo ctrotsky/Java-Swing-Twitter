@@ -115,7 +115,6 @@ public class AdminPanel extends TwitterForm implements ActionListener{
         tree = new JTree(rootNode);
         treeLayout(tree, 10, 40, 190, 255);
         treeViewPanel.add(tree);
-        rootNode.add(new DefaultMutableTreeNode("lol"));
         
         openUserView = new JButton("Open User View");
         buttonLayout(openUserView, 10, 305, 190, 35, treeViewPanel);
