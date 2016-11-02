@@ -24,15 +24,16 @@ public class UserView extends TwitterForm {
     private JScrollPane followingScrollPane;
     private JList followingList;
     private JButton followUser;
-    private JTextField followUserID;
+    private JTextField followUserIDTextField;
     private JLabel followUserIDLabel;
     private JLabel followingTitle;
     
     private JPanel newsFeedPanel;
     private JScrollPane newsFeedScrollPane;
+    private DefaultListModel newsFeedListModel;
     private JList newsFeedList;
     private JButton postTweet;
-    private JTextField tweet;
+    private JTextField tweetTextField;
     private JLabel newsFeedTitle;
     private JLabel tweetLabel;
     
@@ -67,7 +68,7 @@ public class UserView extends TwitterForm {
         // Lists: followingList
         // Labels: followUserIDLabel, followingTitle
         // Buttons: followUser
-        // Text Fields: followUserID
+        // Text Fields: followUserIDTextField
         /////////////////////////////////////////////
         followingPanel = new JPanel();
         panelLayout(followingPanel, 10, 60, 375, 210);
@@ -83,9 +84,9 @@ public class UserView extends TwitterForm {
         titleLayout(followingTitle, 0, 5, 365, 30);
         followingPanel.add(followingTitle);
         
-        followUserID = new JTextField();
-        followUserID.setBounds(10, 50, 185, 35);
-        followingPanel.add(followUserID);
+        followUserIDTextField = new JTextField();
+        followUserIDTextField.setBounds(10, 50, 185, 35);
+        followingPanel.add(followUserIDTextField);
         
         followingList = new JList();
         
@@ -100,7 +101,7 @@ public class UserView extends TwitterForm {
         // Lists: newsFeedList
         // Labels: newsFeedTitle, tweetLabel
         // Buttons: followUser
-        // TextFields: tweet
+        // TextFields: tweetTextField
         /////////////////////////////////////////////
         newsFeedPanel = new JPanel();
         panelLayout(newsFeedPanel, 10, 280, 375, 260);
@@ -116,26 +117,48 @@ public class UserView extends TwitterForm {
         titleLayout(newsFeedTitle, 0, 5, 365, 30);
         newsFeedPanel.add(newsFeedTitle);
         
-        tweet = new JTextField();
-        tweet.setBounds(10, 50, 185, 35);
-        newsFeedPanel.add(tweet);
+        tweetTextField = new JTextField();
+        tweetTextField.setBounds(10, 50, 185, 35);
+        newsFeedPanel.add(tweetTextField);
         
-        newsFeedList = new JList();
+        newsFeedListModel = new DefaultListModel(); //addElement(tweetTextField) to this to add tweets
+        newsFeedList = new JList(newsFeedListModel);
         
         newsFeedScrollPane = new JScrollPane(newsFeedList);
         newsFeedScrollPane.setBounds(10, 100, 355, 150);
         newsFeedPanel.add(newsFeedScrollPane);
-        
-        
-        
         
         setVisible(true);
         System.out.println("User View Initialized");
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void actionPerformed(ActionEvent ae) {
+        if (ae.getSource() == postTweet) {
+           postTweet();
+        } 
+        else if (ae.getSource() == followUser){
+            followUser();
+        }
+    }
+    
+    public void addTweetToNewsFeed(String tweet){
+        newsFeedListModel.addElement(tweet);
+    }
+    
+    public void postTweet(){
+        //if the user has typed in a tweet, post it, and empty the tweet text field
+        if (!tweetTextField.getText().equals("")){
+            user.postTweet(tweetTextField.getText());
+            tweetTextField.setText("");
+        }
+    }
+    
+    public void followUser(){
+        if (!followUserIDTextField.getText().equals("")){
+            user.followUser(followUserIDTextField.getText());
+            followUserIDTextField.setText("");
+        }
     }
     
 }

@@ -18,9 +18,7 @@ public class Driver {
         // TODO code application logic here
         AdminPanel.getInstance().init();
         
-        
-        UserView userView = new UserView(new User());
-        userView.init();
+        User boby = new User("bob");
     }
     
 }
