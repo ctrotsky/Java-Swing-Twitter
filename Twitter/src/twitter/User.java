@@ -13,12 +13,11 @@ class User extends Subject implements Observer{
     private String uniqueID;
     private String latestTweet;
     private String newsFeed;
-    
     private UserView userView;
 
     
     public User(String uniqueID){
-        
+        this.uniqueID = uniqueID;
     }
     
     public String getUniqueID(){

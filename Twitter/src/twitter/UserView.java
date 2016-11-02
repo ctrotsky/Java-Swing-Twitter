@@ -15,8 +15,26 @@ import javax.swing.*;
  */
 public class UserView extends TwitterForm {
     
-    private JLabel formTitle;
     private User user;
+    
+    private JLabel formTitle;
+    private JLabel userIDLabel;
+    
+    private JPanel followingPanel;
+    private JScrollPane followingScrollPane;
+    private JList followingList;
+    private JButton followUser;
+    private JTextField followUserID;
+    private JLabel followUserIDLabel;
+    private JLabel followingTitle;
+    
+    private JPanel newsFeedPanel;
+    private JScrollPane newsFeedScrollPane;
+    private JList newsFeedList;
+    private JButton postTweet;
+    private JTextField tweet;
+    private JLabel newsFeedTitle;
+    private JLabel tweetLabel;
     
     public UserView(User user){
         this.user = user;
@@ -26,8 +44,8 @@ public class UserView extends TwitterForm {
         getContentPane().setLayout(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
-        setTitle("Twitter [User View]");
-        setSize(400, 400);
+        setTitle("Twitter [User View: " + user.getUniqueID() + "]");
+        setSize(400, 575);
         setLocationRelativeTo(null);
         
         formTitle = new JLabel("Twitter");
@@ -36,6 +54,79 @@ public class UserView extends TwitterForm {
         formTitle.setForeground(new Color(98, 190, 253));
         formTitle.setFont(new Font("SANS_SERIF", Font.BOLD + Font.ITALIC, 36));
         add(formTitle);
+        
+        userIDLabel = new JLabel(user.getUniqueID());
+        userIDLabel.setBounds(10,5,200,50);
+        userIDLabel.setFont(new Font("SANS_SERIF", Font.BOLD, 36));
+        add(userIDLabel);
+        
+        /////////////////////////////////////////////
+        // Following Panel
+        // =========================================
+        // Panes: followingScrollPane
+        // Lists: followingList
+        // Labels: followUserIDLabel, followingTitle
+        // Buttons: followUser
+        // Text Fields: followUserID
+        /////////////////////////////////////////////
+        followingPanel = new JPanel();
+        panelLayout(followingPanel, 10, 60, 375, 210);
+        
+        followUser = new JButton("Follow User");
+        buttonLayout(followUser, 205, 50, 160, 35, followingPanel);
+        
+        followUserIDLabel = new JLabel("User ID:");
+        followUserIDLabel.setBounds(10, 36, 160, 15);
+        followingPanel.add(followUserIDLabel);
+        
+        followingTitle = new JLabel("Following:");
+        titleLayout(followingTitle, 0, 5, 365, 30);
+        followingPanel.add(followingTitle);
+        
+        followUserID = new JTextField();
+        followUserID.setBounds(10, 50, 185, 35);
+        followingPanel.add(followUserID);
+        
+        followingList = new JList();
+        
+        followingScrollPane = new JScrollPane(followingList);
+        followingScrollPane.setBounds(10, 100, 355, 100);
+        followingPanel.add(followingScrollPane);
+        
+        /////////////////////////////////////////////
+        // News Feed Panel
+        // =========================================
+        // Panes: newsFeedScrollPane
+        // Lists: newsFeedList
+        // Labels: newsFeedTitle, tweetLabel
+        // Buttons: followUser
+        // TextFields: tweet
+        /////////////////////////////////////////////
+        newsFeedPanel = new JPanel();
+        panelLayout(newsFeedPanel, 10, 280, 375, 260);
+        
+        postTweet = new JButton("Post Tweet");
+        buttonLayout(postTweet, 205, 50, 160, 35, newsFeedPanel);
+        
+        tweetLabel = new JLabel("New Tweet:");
+        tweetLabel.setBounds(10, 36, 160, 15);
+        newsFeedPanel.add(tweetLabel);
+        
+        newsFeedTitle = new JLabel("News Feed:");
+        titleLayout(newsFeedTitle, 0, 5, 365, 30);
+        newsFeedPanel.add(newsFeedTitle);
+        
+        tweet = new JTextField();
+        tweet.setBounds(10, 50, 185, 35);
+        newsFeedPanel.add(tweet);
+        
+        newsFeedList = new JList();
+        
+        newsFeedScrollPane = new JScrollPane(newsFeedList);
+        newsFeedScrollPane.setBounds(10, 100, 355, 150);
+        newsFeedPanel.add(newsFeedScrollPane);
+        
+        
         
         
         setVisible(true);
