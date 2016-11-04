@@ -9,7 +9,7 @@ package twitter;
  *
  * @author Colin
  */
-class User extends Subject implements Observer{
+class User extends Subject implements Observer, UserElement{
     private String uniqueID;
     private String latestTweet;
     private String newsFeed;
@@ -20,10 +20,6 @@ class User extends Subject implements Observer{
         attach(this);
         userView = new UserView(this);
         userView.init();
-    }
-    
-    public String getUniqueID(){
-        return uniqueID;
     }
     
     public String getLatestTweet(){
@@ -57,6 +53,44 @@ class User extends Subject implements Observer{
         userView.setVisible(true);
     }
     
+    
+    public String toString(){
+        return uniqueID;
+    }
+    
+    
+    /////////////////////////////////////////////
+    // Implementation of UserElement methods
+    /////////////////////////////////////////////
+    
+    @Override
+    public String getUniqueID(){
+        return uniqueID;
+    }
+
+    @Override
+    public void add(UserElement elem) {
+        //Users are leaf nodes, so this method is not applicable to this class.
+        throw new UnsupportedOperationException("Cannot add children to User");
+    }
+
+    @Override
+    public UserElement getChild(int i) {
+        //Users are leaf nodes, so this method is not applicable to this class.
+        return null;
+    }
+
+    @Override
+    public int getIndexOfChild(UserElement elem) {
+        //Users are leaf nodes, so this method is not applicable to this class.
+        return -1;
+    }
+
+    @Override
+    public int getChildCount() {
+        //Users are leaf nodes, so this method is not applicable to this class.
+        return 0;
+    }
     
     
     
