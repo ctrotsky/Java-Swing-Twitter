@@ -16,12 +16,19 @@ class Group implements UserElement{
     private String uniqueID;
     private ArrayList<UserElement> children;
     
+    public Group(String uniqueID){
+        this.uniqueID = uniqueID;
+        children = new ArrayList<>();
+    }
+    
+    @Override
+    public String toString(){
+        return uniqueID;
+    }
+    
     /////////////////////////////////////////////
     // Implementation of UserElement methods
     ///////////////////////////////////////////// 
-    public Group(String uniqueID){
-        this.uniqueID = uniqueID;
-    }
 
     @Override
     public String getUniqueID() {

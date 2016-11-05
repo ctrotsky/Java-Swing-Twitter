@@ -20,8 +20,8 @@ public class AdminPanel extends TwitterForm implements ActionListener{
     private JLabel visitorButtonsTitle;
     
     private JPanel treeViewPanel;
-    private DefaultMutableTreeNode rootNode;
-    private DefaultTreeModel treeModel;
+    private UserElement rootGroup;
+    private UserElementTreeModel treeModel;
     private JTree tree;
     private JButton openUserView;
     private JLabel treeViewTitle;
@@ -110,9 +110,9 @@ public class AdminPanel extends TwitterForm implements ActionListener{
         treeViewPanel = new JPanel();
         panelLayout(treeViewPanel, 10, 10, 210, 351);
         
-        rootNode = new DefaultMutableTreeNode("Root");
-        treeModel = new DefaultTreeModel(rootNode);
-        tree = new JTree(rootNode);
+        rootGroup = new Group("Root");
+        treeModel = new UserElementTreeModel(rootGroup);
+        tree = new JTree(treeModel);
         treeLayout(tree, 10, 40, 190, 255);
         treeViewPanel.add(tree);
         
@@ -172,5 +172,5 @@ public class AdminPanel extends TwitterForm implements ActionListener{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    
+    //TODO disable open user view button when user not selected in tree
 }

@@ -16,9 +16,13 @@ import javax.swing.tree.*;
  */
 public class UserElementTreeModel implements TreeModel{
     
-    private Group root;
+    private UserElement root;
     private ArrayList<UserElement> elements = new ArrayList<>();
     private List<TreeModelListener> listeners = new ArrayList<TreeModelListener>();
+    
+    public UserElementTreeModel(UserElement root){
+        this.root = root;
+    }
 
     @Override
     public Object getRoot() {
