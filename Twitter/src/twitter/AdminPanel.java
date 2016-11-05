@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import javax.swing.tree.*;
+import javax.swing.event.TreeModelListener;
 
 public class AdminPanel extends TwitterForm implements ActionListener{
 
@@ -113,6 +113,7 @@ public class AdminPanel extends TwitterForm implements ActionListener{
         rootGroup = new Group("Root");
         treeModel = new UserElementTreeModel(rootGroup);
         tree = new JTree(treeModel);
+        
         treeLayout(tree, 10, 40, 190, 255);
         treeViewPanel.add(tree);
         
@@ -168,9 +169,41 @@ public class AdminPanel extends TwitterForm implements ActionListener{
     
     
     @Override
-    public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void actionPerformed(ActionEvent ae) {
+        if (ae.getSource() == addUser) {
+           addUser();
+        } 
+        else if (ae.getSource() == addGroup){
+            addGroup();
+        }
+        else if (ae.getSource() == openUserView){
+            openUserView();
+        }
     }
     
+    private void addUser(){
+        if (userID.getText() != ""){
+            UserElement parent = ((UserElement)tree.getLastSelectedPathComponent());
+            treeModel.addUserElement(parent, new User(userID.getText()));
+        }
+    }
+    
+    private void addGroup(){
+        if (groupID.getText() != ""){
+            UserElement parent = ((UserElement)tree.getLastSelectedPathComponent());
+            treeModel.addUserElement(parent, new Group(groupID.getText()));
+        }
+    }
+    
+    private void openUserView() {
+        UserElement elem = ((UserElement)tree.getLastSelectedPathComponent());
+        ((User)elem).openUserView();
+    }
+    
+    
+    
     //TODO disable open user view button when user not selected in tree
+    //TODO make UserManager class that does all the checking to see if user exists, then just pass new User object to addUser() method in AdminPanel
+
+    
 }

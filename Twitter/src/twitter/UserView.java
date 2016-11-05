@@ -161,4 +161,6 @@ public class UserView extends TwitterForm {
         }
     }
     
+    //TODO count of followers and following at top of form
+    
 }

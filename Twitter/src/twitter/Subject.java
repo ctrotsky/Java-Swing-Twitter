@@ -30,4 +30,8 @@ public abstract class Subject {
         }
     }
     
+    protected int getObserverCount() {
+        return observers.size();
+    }
+    
 }

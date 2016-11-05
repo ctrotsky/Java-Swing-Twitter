@@ -7,6 +7,7 @@ package twitter;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.*;
 
@@ -22,6 +23,36 @@ public class UserElementTreeModel implements TreeModel{
     
     public UserElementTreeModel(UserElement root){
         this.root = root;
+    }
+    
+    public UserElement searchByID(UserElement node, String id) {
+        if (node.getUniqueID().equals(id)) {
+            System.out.println("Found goal node");
+            return node;
+        }
+        for (int i = 0; i < node.getChildCount(); i++){
+            UserElement child = node.getChild(i);
+            if (searchByID(child, id) != null){
+                 System.out.println("Path contains node ");
+                 return child;
+            }
+        }
+        
+        return null;
+    }
+    
+    private void fireTreeStructureChanged()
+    {
+        Object[] o = {root};
+        TreeModelEvent e = new TreeModelEvent(this, o);
+        for(TreeModelListener l : listeners){
+            l.treeStructureChanged(e);
+        }
+    }
+    
+    public void addUserElement(UserElement parent, UserElement elem){
+        parent.add(elem);
+        fireTreeStructureChanged();
     }
 
     @Override

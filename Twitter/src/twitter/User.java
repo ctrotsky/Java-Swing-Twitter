@@ -56,8 +56,7 @@ class User extends Subject implements Observer, UserElement{
     
     public String toString(){
         return uniqueID;
-    }
-    
+    }   
     
     /////////////////////////////////////////////
     // Implementation of UserElement methods
