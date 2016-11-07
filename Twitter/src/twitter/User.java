@@ -6,6 +6,7 @@
 package twitter;
 
 import Visitor.Visitor;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,19 +14,25 @@ import Visitor.Visitor;
  */
 public class User extends Subject implements Observer, UserElement{
     private String uniqueID;
-    private String latestTweet;
-    private String newsFeed;
+    private ArrayList<String> tweets;
+    private ArrayList<String> newsFeed;
     private UserView userView;
     
     public User(String uniqueID){
         this.uniqueID = uniqueID;
         attach(this);
         userView = new UserView(this);
+        tweets = new ArrayList();
+        newsFeed = new ArrayList();
         userView.init();
     }
     
     public String getLatestTweet(){
-        return latestTweet;
+        return tweets.get(tweets.size() - 1);
+    }
+    
+    public ArrayList<String> getTweets(){
+        return tweets;
     }
 
     @Override
@@ -37,12 +44,13 @@ public class User extends Subject implements Observer, UserElement{
     }
     
     public void postToNewsFeed(String tweet){
-        newsFeed = newsFeed + tweet + "\n";
+        System.out.println("tweet:" + tweet);
+        newsFeed.add(tweet);
         userView.addTweetToNewsFeed(tweet);
     }
     
     public void postTweet(String tweet){
-        latestTweet = tweet;
+        tweets.add(tweet);
         notifyObservers();
     }
     
