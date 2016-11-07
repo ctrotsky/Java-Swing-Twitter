@@ -17,6 +17,7 @@ public class Group implements UserElement{
     private UserElementTreeModel treeModel;
     private String uniqueID;
     private ArrayList<UserElement> children;
+    private final String iconURL = "/resources/group_icon.png";
     
     public Group(UserElementTreeModel treeModel, String uniqueID){
         this.treeModel = treeModel;
@@ -65,5 +66,10 @@ public class Group implements UserElement{
             elem.accept(vis);
         }
     }
-    
+
+    @Override
+    public String getIconURL() {
+        return iconURL;
+    }
+
 }

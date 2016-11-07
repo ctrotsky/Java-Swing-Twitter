@@ -21,4 +21,5 @@ public interface UserElement {
     public int getIndexOfChild(UserElement elem);
     public int getChildCount();
     public void accept(Visitor vis);
+    public String getIconURL();
 }

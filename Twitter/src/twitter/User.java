@@ -18,6 +18,7 @@ public class User extends Subject implements Observer, UserElement{
     private ArrayList<String> tweets;
     private ArrayList<String> newsFeed;
     private UserView userView;
+    private final String iconURL = "/resources/user_icon.png";
     
     public User(UserElementTreeModel treeModel, String uniqueID){
         this.treeModel = treeModel;
@@ -118,8 +119,8 @@ public class User extends Subject implements Observer, UserElement{
         vis.atUser(this);
     }
     
-    
-    
-    
-    
+    @Override
+    public String getIconURL() {
+        return iconURL;
+    }
 }

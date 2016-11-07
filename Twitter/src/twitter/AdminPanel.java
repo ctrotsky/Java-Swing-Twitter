@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.TreeCellRenderer;
 
 public class AdminPanel extends TwitterForm implements ActionListener{
 
@@ -22,6 +24,7 @@ public class AdminPanel extends TwitterForm implements ActionListener{
     private JPanel treeViewPanel;
     private UserElement rootGroup;
     private UserElementTreeModel treeModel;
+    private UserElementTreeCellRenderer treeCellRenderer;
     private JTree tree;
     private JButton openUserView;
     private JLabel treeViewTitle;
@@ -106,13 +109,15 @@ public class AdminPanel extends TwitterForm implements ActionListener{
         // Trees: tree
         // Buttons: openUserView 
         // Labels: treeViewTitle
-        /////////////////////////////////////////////
+        /////////////////////////////////////////////  
         treeViewPanel = new JPanel();
         panelLayout(treeViewPanel, 10, 10, 210, 351);
         
         rootGroup = new Group(treeModel, "Root");
         treeModel = new UserElementTreeModel(rootGroup);
         tree = new JTree(treeModel);
+        treeCellRenderer = new UserElementTreeCellRenderer();
+        tree.setCellRenderer(treeCellRenderer);
         
         treeLayout(tree, 10, 40, 190, 255);
         treeViewPanel.add(tree);
@@ -204,11 +209,12 @@ public class AdminPanel extends TwitterForm implements ActionListener{
             //search from rootGroup for duplicates, not from specified parent
             if (treeModel.findUserByID(rootGroup, id) == null){
                 treeModel.addUserElement(parent, new User(treeModel, id));
+                userID.setText("");
             }
             else {
                 JOptionPane.showMessageDialog(this, "Error: That username is taken.", "User Already Exists", JOptionPane.ERROR_MESSAGE);
             }
-            userID.setText("");
+            
         }
     }
     
@@ -222,11 +228,11 @@ public class AdminPanel extends TwitterForm implements ActionListener{
             }
             if (treeModel.findGroupByID(rootGroup, id) == null){
                 treeModel.addUserElement(parent, new Group(treeModel, id));
+                groupID.setText("");
             }
             else {
                 JOptionPane.showMessageDialog(this, "Error: That group name is taken.", "Group Already Exists", JOptionPane.ERROR_MESSAGE);
-            }
-            groupID.setText("");
+            }            
         }
     }
     
