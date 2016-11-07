@@ -194,26 +194,51 @@ public class AdminPanel extends TwitterForm implements ActionListener{
     }
     
     private void addUser(){
-        if (userID.getText() != ""){
+        String id = userID.getText();
+        if (!id.equals("")){
             UserElement parent = ((UserElement)tree.getLastSelectedPathComponent());
             //If nothing is selected in active users, create user in root group
             if (parent == null){
                 parent = rootGroup;
             }
-            treeModel.addUserElement(parent, new User(userID.getText()));
+            //search from rootGroup for duplicates, not from specified parent
+            if (treeModel.findUserByID(rootGroup, id) == null){
+                treeModel.addUserElement(parent, new User(id));
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "Error: That username is taken.", "User Already Exists", JOptionPane.ERROR_MESSAGE);
+            }
+            userID.setText("");
         }
     }
     
     private void addGroup(){
-        if (groupID.getText() != ""){
+        String id = groupID.getText();
+        if (!id.equals("")){
             UserElement parent = ((UserElement)tree.getLastSelectedPathComponent());
-            treeModel.addUserElement(parent, new Group(groupID.getText()));
+            //If nothing is selected in active users, create user in root group
+            if (parent == null){
+                parent = rootGroup;
+            }
+            if (treeModel.findGroupByID(rootGroup, id) == null){
+                treeModel.addUserElement(parent, new Group(id));
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "Error: That group name is taken.", "Group Already Exists", JOptionPane.ERROR_MESSAGE);
+            }
+            groupID.setText("");
         }
     }
     
     private void openUserView() {
         UserElement elem = ((UserElement)tree.getLastSelectedPathComponent());
-        ((User)elem).openUserView();
+        if (elem instanceof User){
+            ((User)elem).openUserView();
+        }
+        else {
+            //Could change this. Could make openUserView() a method in UserElement, if group then call on all children.
+            JOptionPane.showMessageDialog(this, "Error: Cannot open UserView of Group", "Group Already Exists", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     private void showUserTotal(){
@@ -225,7 +250,7 @@ public class AdminPanel extends TwitterForm implements ActionListener{
         UserTotalVisitor vis = new UserTotalVisitor();
         start.accept(vis);
         result = vis.total;
-        JOptionPane.showMessageDialog(this, "Total count of tweets: " + result, "Total Messages", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Total count of Users: " + result, "Total Messages", JOptionPane.PLAIN_MESSAGE);
         System.out.println("Total users: " + result);
     }
     
@@ -251,7 +276,7 @@ public class AdminPanel extends TwitterForm implements ActionListener{
         MessagesTotalVisitor vis = new MessagesTotalVisitor();
         start.accept(vis);
         result = vis.total;
-        JOptionPane.showMessageDialog(this, "Total count of tweets: " + result, "Total Messages", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Total count of Tweets: " + result, "Total Messages", JOptionPane.PLAIN_MESSAGE);
         System.out.println("Total messages: " + result);
     }
     

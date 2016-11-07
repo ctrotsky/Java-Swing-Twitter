@@ -5,6 +5,7 @@
  */
 package twitter;
 
+import Visitor.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.event.TreeModelEvent;
@@ -25,20 +26,16 @@ public class UserElementTreeModel implements TreeModel{
         this.root = root;
     }
     
-    public UserElement searchByID(UserElement node, String id) {
-        if (node.getUniqueID().equals(id)) {
-            System.out.println("Found goal node");
-            return node;
-        }
-        for (int i = 0; i < node.getChildCount(); i++){
-            UserElement child = node.getChild(i);
-            if (searchByID(child, id) != null){
-                 System.out.println("Path contains node ");
-                 return child;
-            }
-        }
-        
-        return null;
+    public UserElement findUserByID(UserElement start, String id){
+        FindUserVisitor vis = new FindUserVisitor(id);
+        start.accept(vis);
+        return vis.result;
+    }
+    
+    public UserElement findGroupByID(UserElement start, String id){
+        FindGroupVisitor vis = new FindGroupVisitor(id);
+        start.accept(vis);
+        return vis.result;
     }
     
     private void fireTreeStructureChanged()
