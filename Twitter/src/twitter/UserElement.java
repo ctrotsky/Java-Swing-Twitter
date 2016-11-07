@@ -5,6 +5,8 @@
  */
 package twitter;
 
+import Visitor.Visitor;
+
 /**
  *
  * @author Colin
@@ -18,4 +20,5 @@ public interface UserElement {
     public UserElement getChild(int i);
     public int getIndexOfChild(UserElement elem);
     public int getChildCount();
+    public void accept(Visitor vis);
 }

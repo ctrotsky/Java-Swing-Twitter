@@ -5,11 +5,13 @@
  */
 package twitter;
 
+import Visitor.Visitor;
+
 /**
  *
  * @author Colin
  */
-class User extends Subject implements Observer, UserElement{
+public class User extends Subject implements Observer, UserElement{
     private String uniqueID;
     private String latestTweet;
     private String newsFeed;
@@ -89,6 +91,11 @@ class User extends Subject implements Observer, UserElement{
     public int getChildCount() {
         //Users are leaf nodes, so this method is not applicable to this class.
         return 0;
+    }
+
+    @Override
+    public void accept(Visitor vis) {
+        vis.atUser(this);
     }
     
     

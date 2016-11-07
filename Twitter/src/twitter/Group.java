@@ -1,5 +1,6 @@
 package twitter;
 
+import Visitor.Visitor;
 import java.util.ArrayList;
 
 /*
@@ -12,7 +13,7 @@ import java.util.ArrayList;
  *
  * @author Colin
  */
-class Group implements UserElement{
+public class Group implements UserElement{
     private String uniqueID;
     private ArrayList<UserElement> children;
     
@@ -53,6 +54,14 @@ class Group implements UserElement{
     @Override
     public int getChildCount() {
         return children.size();
+    }
+
+    @Override
+    public void accept(Visitor vis) {
+        vis.atGroup(this);
+        for (UserElement elem : children){
+            elem.accept(vis);
+        }
     }
     
 }
