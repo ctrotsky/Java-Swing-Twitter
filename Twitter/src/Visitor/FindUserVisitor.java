@@ -18,13 +18,13 @@ public class FindUserVisitor implements Visitor {
     private String id;
     
     public FindUserVisitor(String searchID){
-        id = searchID;
+        id = searchID.toLowerCase();
     }
 
     @Override
     public void atUser(User e) {
         System.out.println("Searching User: " + e.getUniqueID());
-        if (e.getUniqueID().equals(id)){
+        if (e.getUniqueID().toLowerCase().equals(id)){
             System.out.println("Found User: " + e.getUniqueID());
             result = e;
         }

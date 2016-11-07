@@ -18,7 +18,7 @@ public class FindGroupVisitor implements Visitor {
     private String id;
     
     public FindGroupVisitor(String searchID){
-        id = searchID;
+        id = searchID.toLowerCase();
     }
 
     @Override
@@ -29,7 +29,7 @@ public class FindGroupVisitor implements Visitor {
     @Override
     public void atGroup(Group e) {
         System.out.println("Searching Group: " + e.getUniqueID());
-        if (e.getUniqueID().equals(id)){
+        if (e.getUniqueID().toLowerCase().equals(id)){
             System.out.println("Found Group: " + e.getUniqueID());
             result = e;
         }
