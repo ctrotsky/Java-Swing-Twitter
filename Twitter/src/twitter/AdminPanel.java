@@ -1,10 +1,10 @@
 package twitter;
 
+import Visitor.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import javax.swing.event.TreeModelListener;
 
 public class AdminPanel extends TwitterForm implements ActionListener{
 
@@ -179,11 +179,27 @@ public class AdminPanel extends TwitterForm implements ActionListener{
         else if (ae.getSource() == openUserView){
             openUserView();
         }
+        else if (ae.getSource() == showUserTotal){
+            showUserTotal();
+        }
+        else if (ae.getSource() == showGroupTotal){
+            showGroupTotal();
+        }
+        else if (ae.getSource() == showMessagesTotal){
+            showMessagesTotal();
+        }
+        else if (ae.getSource() == showPositivePercentage){
+            showPositivePercentage();
+        }
     }
     
     private void addUser(){
         if (userID.getText() != ""){
             UserElement parent = ((UserElement)tree.getLastSelectedPathComponent());
+            //If nothing is selected in active users, create user in root group
+            if (parent == null){
+                parent = rootGroup;
+            }
             treeModel.addUserElement(parent, new User(userID.getText()));
         }
     }
@@ -200,10 +216,61 @@ public class AdminPanel extends TwitterForm implements ActionListener{
         ((User)elem).openUserView();
     }
     
+    private void showUserTotal(){
+        int result;
+        UserElement start = ((UserElement)tree.getLastSelectedPathComponent());
+        if (start == null){
+                start = rootGroup;
+        }
+        UserTotalVisitor vis = new UserTotalVisitor();
+        start.accept(vis);
+        result = vis.total;
+        JOptionPane.showMessageDialog(this, "Total count of tweets: " + result, "Total Messages", JOptionPane.PLAIN_MESSAGE);
+        System.out.println("Total users: " + result);
+    }
     
+    private void showGroupTotal(){
+        int result;
+        UserElement start = ((UserElement)tree.getLastSelectedPathComponent());
+        if (start == null){
+                start = rootGroup;
+        }
+        GroupTotalVisitor vis = new GroupTotalVisitor();
+        start.accept(vis);
+        result = vis.total;
+        JOptionPane.showMessageDialog(this, "Total count of Groups: " + result, "Total Groups", JOptionPane.PLAIN_MESSAGE);
+        System.out.println("Total groups: " + result);
+    }
     
-    //TODO disable open user view button when user not selected in tree
-    //TODO make UserManager class that does all the checking to see if user exists, then just pass new User object to addUser() method in AdminPanel
-
+    private void showMessagesTotal(){
+        int result;
+        UserElement start = ((UserElement)tree.getLastSelectedPathComponent());
+        if (start == null){
+                start = rootGroup;
+        }
+        MessagesTotalVisitor vis = new MessagesTotalVisitor();
+        start.accept(vis);
+        result = vis.total;
+        JOptionPane.showMessageDialog(this, "Total count of tweets: " + result, "Total Messages", JOptionPane.PLAIN_MESSAGE);
+        System.out.println("Total messages: " + result);
+    }
     
+    private void showPositivePercentage(){
+        double result;
+        UserElement start = ((UserElement)tree.getLastSelectedPathComponent());
+        if (start == null){
+                start = rootGroup;
+        }
+        PositiveMessagesTotalVisitor posTotalVis = new PositiveMessagesTotalVisitor();
+        MessagesTotalVisitor messagesTotalVis = new MessagesTotalVisitor();
+        start.accept(posTotalVis);
+        start.accept(messagesTotalVis);
+        
+        result = (double)posTotalVis.total / (double)messagesTotalVis.total * 100.0;
+        
+        JOptionPane.showMessageDialog(this, "Percentage of Tweets containing positive messages: " + result + "%", "Positive Percentage", JOptionPane.PLAIN_MESSAGE);
+        System.out.println("Positive percentage: " + result + "%");
+    }
+    
+    //TODO make UserManager class that does all the checking to see if user exists, then just pass new User object to addUser() method in AdminPanel or return from UserManager
 }
