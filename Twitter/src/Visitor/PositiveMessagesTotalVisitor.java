@@ -19,7 +19,7 @@ public class PositiveMessagesTotalVisitor implements Visitor {
     
     public int total;
     
-    private final List<String> positiveWords = Arrays.asList("good");
+    private final List<String> positiveWords = Arrays.asList("good", "great", "excellent", "dope", "bodacious", "sublime", "happy", "amazing", "wonderful");
 
     @Override
     public void atUser(User e) {
