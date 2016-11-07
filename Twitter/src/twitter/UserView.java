@@ -154,8 +154,14 @@ public class UserView extends TwitterForm {
     }
     
     public void followUser(){
-        if (!followUserIDTextField.getText().equals("")){
-            user.followUser(followUserIDTextField.getText());
+        String followUserID = followUserIDTextField.getText();
+        if (!followUserID.equals("")){
+            if(user.followUser(followUserID)){
+                System.out.println("User succesfully followed");
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "Error: User " + followUserID + " does not exist.", "User does not exist", JOptionPane.ERROR_MESSAGE);
+            }
             followUserIDTextField.setText("");
         }
     }

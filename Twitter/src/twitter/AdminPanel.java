@@ -110,8 +110,8 @@ public class AdminPanel extends TwitterForm implements ActionListener{
         treeViewPanel = new JPanel();
         panelLayout(treeViewPanel, 10, 10, 210, 351);
         
-        treeModel = new UserElementTreeModel(rootGroup);
         rootGroup = new Group(treeModel, "Root");
+        treeModel = new UserElementTreeModel(rootGroup);
         tree = new JTree(treeModel);
         
         treeLayout(tree, 10, 40, 190, 255);
@@ -236,7 +236,7 @@ public class AdminPanel extends TwitterForm implements ActionListener{
             ((User)elem).openUserView();
         }
         else {
-            //Could change this. Could make openUserView() a method in UserElement, if group then call on all children.
+            //Could change this. Could make openUserView() a method in UserElement, if group then call on all children
             JOptionPane.showMessageDialog(this, "Error: Cannot open UserView of Group", "Group Already Exists", JOptionPane.ERROR_MESSAGE);
         }
     }

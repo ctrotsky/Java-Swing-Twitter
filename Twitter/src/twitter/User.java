@@ -56,9 +56,18 @@ public class User extends Subject implements Observer, UserElement{
         notifyObservers();
     }
     
-    public void followUser(String userID){
-        //Not implemented.
-        //TODO: Find user with ID in main thingy, attach that user.
+    //returns if user was successfully followed
+    public boolean followUser(String userID){
+        User followUser = (User) treeModel.findUserByID((UserElement) treeModel.getRoot(), userID);
+        
+        if (followUser != null){
+            followUser.attach(this);
+            return true;
+        }
+        else {
+            return false;
+        }
+        
     }
     
     public void openUserView(){
@@ -66,6 +75,7 @@ public class User extends Subject implements Observer, UserElement{
     }
     
     
+    @Override
     public String toString(){
         return uniqueID;
     }   
