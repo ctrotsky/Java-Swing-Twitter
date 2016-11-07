@@ -128,7 +128,6 @@ public class UserView extends TwitterForm {
         newsFeedScrollPane.setBounds(10, 100, 355, 150);
         newsFeedPanel.add(newsFeedScrollPane);
         
-        setVisible(true);
         System.out.println("User View Initialized");
     }
 
