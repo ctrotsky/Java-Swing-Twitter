@@ -13,12 +13,14 @@ import java.util.ArrayList;
  * @author Colin
  */
 public class User extends Subject implements Observer, UserElement{
+    private UserElementTreeModel treeModel;
     private String uniqueID;
     private ArrayList<String> tweets;
     private ArrayList<String> newsFeed;
     private UserView userView;
     
-    public User(String uniqueID){
+    public User(UserElementTreeModel treeModel, String uniqueID){
+        this.treeModel = treeModel;
         this.uniqueID = uniqueID;
         attach(this);
         userView = new UserView(this);

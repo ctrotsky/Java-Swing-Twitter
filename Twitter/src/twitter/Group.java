@@ -14,10 +14,12 @@ import java.util.ArrayList;
  * @author Colin
  */
 public class Group implements UserElement{
+    private UserElementTreeModel treeModel;
     private String uniqueID;
     private ArrayList<UserElement> children;
     
-    public Group(String uniqueID){
+    public Group(UserElementTreeModel treeModel, String uniqueID){
+        this.treeModel = treeModel;
         this.uniqueID = uniqueID;
         children = new ArrayList<>();
     }

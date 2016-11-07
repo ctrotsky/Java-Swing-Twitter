@@ -110,8 +110,8 @@ public class AdminPanel extends TwitterForm implements ActionListener{
         treeViewPanel = new JPanel();
         panelLayout(treeViewPanel, 10, 10, 210, 351);
         
-        rootGroup = new Group("Root");
         treeModel = new UserElementTreeModel(rootGroup);
+        rootGroup = new Group(treeModel, "Root");
         tree = new JTree(treeModel);
         
         treeLayout(tree, 10, 40, 190, 255);
@@ -203,7 +203,7 @@ public class AdminPanel extends TwitterForm implements ActionListener{
             }
             //search from rootGroup for duplicates, not from specified parent
             if (treeModel.findUserByID(rootGroup, id) == null){
-                treeModel.addUserElement(parent, new User(id));
+                treeModel.addUserElement(parent, new User(treeModel, id));
             }
             else {
                 JOptionPane.showMessageDialog(this, "Error: That username is taken.", "User Already Exists", JOptionPane.ERROR_MESSAGE);
@@ -221,7 +221,7 @@ public class AdminPanel extends TwitterForm implements ActionListener{
                 parent = rootGroup;
             }
             if (treeModel.findGroupByID(rootGroup, id) == null){
-                treeModel.addUserElement(parent, new Group(id));
+                treeModel.addUserElement(parent, new Group(treeModel, id));
             }
             else {
                 JOptionPane.showMessageDialog(this, "Error: That group name is taken.", "Group Already Exists", JOptionPane.ERROR_MESSAGE);
