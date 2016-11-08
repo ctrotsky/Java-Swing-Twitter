@@ -23,6 +23,7 @@ public class UserView extends TwitterForm {
     private JPanel followingPanel;
     private JScrollPane followingScrollPane;
     private JList followingList;
+    private DefaultListModel followingListModel;
     private JButton followUser;
     private JTextField followUserIDTextField;
     private JLabel followUserIDLabel;
@@ -88,7 +89,8 @@ public class UserView extends TwitterForm {
         followUserIDTextField.setBounds(10, 50, 185, 35);
         followingPanel.add(followUserIDTextField);
         
-        followingList = new JList();
+        followingListModel = new DefaultListModel();
+        followingList = new JList(followingListModel);
         
         followingScrollPane = new JScrollPane(followingList);
         followingScrollPane.setBounds(10, 100, 355, 100);
@@ -158,6 +160,7 @@ public class UserView extends TwitterForm {
         if (!followUserID.equals("")){
             if(user.followUser(followUserID)){
                 System.out.println("User succesfully followed");
+                followingListModel.add(0, followUserID);
             }
             else {
                 JOptionPane.showMessageDialog(this, "Error: User " + followUserID + " does not exist.", "User does not exist", JOptionPane.ERROR_MESSAGE);
