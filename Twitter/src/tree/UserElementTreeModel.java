@@ -61,7 +61,8 @@ public class UserElementTreeModel implements TreeModel{
     /*
     * FUNCTION: findUserByID()
     * 
-    * Each listener for this tree model will receive a treeStructureChanged TreeModelEvent
+    * Each listener for this tree model will receive a treeStructureChanged TreeModelEvent, causing the
+    * JTree to update its display with the new tree structure.
     */
     private void fireTreeStructureChanged()
     {
