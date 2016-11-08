@@ -12,12 +12,10 @@
 ****************************************************************/ 
 package tree;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
 import java.net.URL;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTree;
@@ -41,7 +39,7 @@ public class UserElementTreeCellRenderer implements TreeCellRenderer {
     * FUNCTION: getTreeCellRendererComponent()
     * 
     * Will return a component with an icon and name for the given value to display in the JTree, 
-    * as well as highlighting the value if it is selected.
+    * as well as highlighting the value if it is selected. Group names will be bolded.
     */
     @Override
     public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded,
