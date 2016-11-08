@@ -1,3 +1,16 @@
+/***************************************************************
+* file: AdminPanel.java
+* author: Colin Trotter
+* class: CS 356 – Object-Oriented Design and Programming
+*
+* assignment: Assignment 2 - Twitter
+* date last modified: 11/7/2016
+*
+* purpose: GUI using the Singleton pattern that allows the user to create Users and Groups, as well as perform
+* analysis functions on the Tree of users and groups.
+*
+****************************************************************/ 
+
 package twitter;
 
 import tree.*;
@@ -60,7 +73,7 @@ public class AdminPanel extends TwitterForm implements ActionListener{
     /*
     * FUNCTION: init()
     * 
-    * Sets up the form and initializes all components.
+    * Sets up the form's layout and initializes all components.
     */
     public void init(){
         getContentPane().setLayout(null);
@@ -172,6 +185,11 @@ public class AdminPanel extends TwitterForm implements ActionListener{
     }
     
     
+    /*
+    * FUNCTION: actionPerformed()
+    * 
+    * Get input from each of the buttons, and run the corresponding method.
+    */
     @Override
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == addUser) {
@@ -197,61 +215,66 @@ public class AdminPanel extends TwitterForm implements ActionListener{
         }
     }
     
+    /*
+    * FUNCTION: addUser()
+    * 
+    * Adds a new user with the uniqueID given by the userID text field. Duplicate uniqueIDs are not allowed.
+    */
     private void addUser(){
         String id = userID.getText();
         if (!id.equals("")){
-            UserElement parent = ((UserElement)tree.getLastSelectedPathComponent());
-            //If nothing is selected in active users, create user in root group
-            if (parent == null){
-                parent = rootGroup;
-            }
-            //search from rootGroup for duplicates, not from specified parent
+            UserElement parent = getSelectedUserElement();
+            //search from rootGroup for duplicates, not from specified parent so there are no duplicates in entire tree
             if (treeModel.findUserByID(rootGroup, id) == null){
                 treeModel.addUserElement(parent, new User(treeModel, id));
                 userID.setText("");
             }
             else {
-                JOptionPane.showMessageDialog(this, "Error: That username is taken.", "User Already Exists", JOptionPane.ERROR_MESSAGE);
+                errorMessage("User Already Exists",  "Error: That username is taken.");
             }
             
         }
     }
     
+    /*
+    * FUNCTION: addGroup()
+    * 
+    * Adds a new group with the uniqueID given by the groupID text field. Duplicate uniqueIDs are not allowed.
+    */
     private void addGroup(){
         String id = groupID.getText();
         if (!id.equals("")){
-            UserElement parent = ((UserElement)tree.getLastSelectedPathComponent());
-            //If nothing is selected in active users, create user in root group
-            if (parent == null){
-                parent = rootGroup;
-            }
+            UserElement parent = getSelectedUserElement();
             if (treeModel.findGroupByID(rootGroup, id) == null){
                 treeModel.addUserElement(parent, new Group(treeModel, id));
                 groupID.setText("");
             }
             else {
-                JOptionPane.showMessageDialog(this, "Error: That group name is taken.", "Group Already Exists", JOptionPane.ERROR_MESSAGE);
+                errorMessage("Group Already Exists",  "Error: That Group name is taken.");
             }            
         }
     }
     
+    /*
+    * FUNCTION: openUserView()
+    *
+    * Opens the UserView of the selected UserElement in the tree. If a User is selected, its UserView will be opened.
+    * If a Group is selected, it will call openUserView on each of its children.
+    */
     private void openUserView() {
-        UserElement elem = ((UserElement)tree.getLastSelectedPathComponent());
-        if (elem instanceof User){
-            ((User)elem).openUserView();
-        }
-        else {
-            //Could change this. Could make openUserView() a method in UserElement, if group then call on all children
-            JOptionPane.showMessageDialog(this, "Error: Cannot open UserView of Group", "Group Already Exists", JOptionPane.ERROR_MESSAGE);
-        }
+        UserElement elem = getSelectedUserElement();
+        elem.openUserView();
     }
     
+    /*
+    * FUNCTION: showUserTotal()
+    *
+    * Uses Visitors to get the total number of groups that
+    * are descendents of the selected UserElement in the tree.
+    */
     private void showUserTotal(){
         int result;
-        UserElement start = ((UserElement)tree.getLastSelectedPathComponent());
-        if (start == null){
-                start = rootGroup;
-        }
+        UserElement start = getSelectedUserElement();
         UserTotalVisitor vis = new UserTotalVisitor();
         start.accept(vis);
         result = vis.total;
@@ -259,12 +282,15 @@ public class AdminPanel extends TwitterForm implements ActionListener{
         System.out.println("Total users: " + result);
     }
     
+    /*
+    * FUNCTION: showGroupTotal()
+    *
+    * Uses Visitors to get the total number of groups that
+    * are descendents of the selected UserElement in the tree.
+    */
     private void showGroupTotal(){
         int result;
-        UserElement start = ((UserElement)tree.getLastSelectedPathComponent());
-        if (start == null){
-                start = rootGroup;
-        }
+        UserElement start = getSelectedUserElement();
         GroupTotalVisitor vis = new GroupTotalVisitor();
         start.accept(vis);
         result = vis.total;
@@ -272,12 +298,15 @@ public class AdminPanel extends TwitterForm implements ActionListener{
         System.out.println("Total groups: " + result);
     }
     
+    /*
+    * FUNCTION: showMessagesTotal()
+    *
+    * Uses Visitors to get the total number of tweets posted by Users that
+    * are descendents of the selected UserElement in the tree.
+    */
     private void showMessagesTotal(){
         int result;
-        UserElement start = ((UserElement)tree.getLastSelectedPathComponent());
-        if (start == null){
-                start = rootGroup;
-        }
+        UserElement start = getSelectedUserElement();
         MessagesTotalVisitor vis = new MessagesTotalVisitor();
         start.accept(vis);
         result = vis.total;
@@ -285,12 +314,15 @@ public class AdminPanel extends TwitterForm implements ActionListener{
         System.out.println("Total messages: " + result);
     }
     
+    /*
+    * FUNCTION: showPositivePercentage()
+    *
+    * Uses Visitors to get a percentage representing the number of 'positive' messages posted by Users that
+    * are descendents of the selected UserElement in the tree.
+    */
     private void showPositivePercentage(){
         double result;
-        UserElement start = ((UserElement)tree.getLastSelectedPathComponent());
-        if (start == null){
-                start = rootGroup;
-        }
+        UserElement start = getSelectedUserElement();
         PositiveMessagesTotalVisitor posTotalVis = new PositiveMessagesTotalVisitor();
         MessagesTotalVisitor messagesTotalVis = new MessagesTotalVisitor();
         start.accept(posTotalVis);
@@ -300,6 +332,20 @@ public class AdminPanel extends TwitterForm implements ActionListener{
         
         JOptionPane.showMessageDialog(this, "Percentage of Tweets containing positive messages: " + result + "%", "Positive Percentage", JOptionPane.PLAIN_MESSAGE);
         System.out.println("Positive percentage: " + result + "%");
+    }
+    
+    /*
+    * FUNCTION: getSelectedUserElement()
+    *
+    * Returns the UserElement that is selected in the JTree. If no UserElement is selected, returns the
+    * rootGroup.
+    */
+    private UserElement getSelectedUserElement(){
+        UserElement result = ((UserElement)tree.getLastSelectedPathComponent());
+        if (result == null){
+            result = rootGroup;
+        }
+        return result;
     }
     
     //TODO make UserManager class that does all the checking to see if user exists, then just pass new User object to addUser() method in AdminPanel or return from UserManager

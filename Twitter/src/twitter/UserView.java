@@ -1,47 +1,54 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/***************************************************************
+* file: UserView.java
+* author: Colin Trotter
+* class: CS 356 – Object-Oriented Design and Programming
+*
+* assignment: Assignment 2 - Twitter
+* date last modified: 11/7/2016
+*
+* purpose: GUI to represent the data of a User object. Has buttons and controls to follow other Users, and
+* see their tweets, as well as to post tweets for this User.
+****************************************************************/ 
 package twitter;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 
-/**
- *
- * @author Colin
- */
 public class UserView extends TwitterForm {
     
-    private User user;
+    private User user;                              //the @User object this UserView represents.
     
-    private JLabel formTitle;
-    private JLabel userIDLabel;
+    private JLabel formTitle;                       //title displayed at the top of the form.
+    private JLabel userIDLabel;                     //userID of the User this UserView represents.
     
-    private JPanel followingPanel;
-    private JScrollPane followingScrollPane;
-    private JList followingList;
-    private DefaultListModel followingListModel;
-    private JButton followUser;
-    private JTextField followUserIDTextField;
-    private JLabel followUserIDLabel;
-    private JLabel followingTitle;
+    private JPanel followingPanel;                  //panel containing Components related to following Users
+    private JScrollPane followingScrollPane;        //scroll pane to contain the Following list
+    private JList followingList;                    //List to contain the uniqueID's of the Users this user is following
+    private DefaultListModel followingListModel;    //List model for the Following list
+    private JButton followUser;                     //Button that will follow the user with the uniqueID given
+    private JTextField followUserIDTextField;       //TextField to type the uniqueID of the User you wish to follow
+    private JLabel followUserIDLabel;               //Label marking the followUserTextField
+    private JLabel followingTitle;                  //Title for this panel
     
-    private JPanel newsFeedPanel;
-    private JScrollPane newsFeedScrollPane;
-    private DefaultListModel newsFeedListModel;
-    private JList newsFeedList;
-    private JButton postTweet;
-    private JTextField tweetTextField;
-    private JLabel newsFeedTitle;
-    private JLabel tweetLabel;
+    private JPanel newsFeedPanel;                   //panel containing components related to the news feed
+    private JScrollPane newsFeedScrollPane;         //scroll pane to contain the news feed list
+    private DefaultListModel newsFeedListModel;     //list model for the news feed
+    private JList newsFeedList;                     //list representing tweets posted by the users this user is following
+    private JButton postTweet;                      //button to post the tweet in tweetTextField
+    private JTextField tweetTextField;              //text field to type a tweet to post
+    private JLabel newsFeedTitle;                   //title of this panel
+    private JLabel tweetLabel;                      //label for tweetTextField
     
     public UserView(User user){
         this.user = user;
     }
     
+    /*
+    * FUNCTION: init()
+    * 
+    * Sets up the form's layout and initializes all components.
+    */
     public void init(){
         getContentPane().setLayout(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -133,6 +140,11 @@ public class UserView extends TwitterForm {
         System.out.println("User View Initialized");
     }
 
+    /*
+    * FUNCTION: actionPerformed()
+    * 
+    * Get input from each of the buttons, and run the corresponding method.
+    */
     @Override
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == postTweet) {
@@ -143,10 +155,20 @@ public class UserView extends TwitterForm {
         }
     }
     
+    /*
+    * FUNCTION: addSTweetToNewsFeed()
+    * 
+    * Adds the string containing a tweet to the news feed list.
+    */
     public void addTweetToNewsFeed(String tweet){
         newsFeedListModel.add(0, tweet);
     }
     
+    /*
+    * FUNCTION: postTweet()
+    * 
+    * Posts the tweet written in tweetTextField. Users following this user will be notified of this tweet.
+    */
     public void postTweet(){
         //if the user has typed in a tweet, post it, and empty the tweet text field
         if (!tweetTextField.getText().equals("")){
@@ -155,6 +177,12 @@ public class UserView extends TwitterForm {
         }
     }
     
+    /*
+    * FUNCTION: followUser()
+    * 
+    * Follows the user whose uniqueID is written in followUserIDTextField. This user will be displayed
+    * in the followingList, and this UserView's user will be able to see tweets posted by this user.
+    */
     public void followUser(){
         String followUserID = followUserIDTextField.getText();
         if (!followUserID.equals("")){
@@ -163,11 +191,13 @@ public class UserView extends TwitterForm {
                 followingListModel.add(0, followUserID);
             }
             else {
-                JOptionPane.showMessageDialog(this, "Error: Could not follow User " + followUserID + ".", "Follow Failed", JOptionPane.ERROR_MESSAGE);
+                errorMessage("Follow Failed",  "Error: Could not follow User " + followUserID + ".");
             }
             followUserIDTextField.setText("");
         }
     }
+    
+    
     
     //TODO count of followers and following at top of form
     

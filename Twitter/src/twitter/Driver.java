@@ -1,22 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/***************************************************************
+* file: Driver.java
+* author: Colin Trotter
+* class: CS 356 – Object-Oriented Design and Programming
+*
+* assignment: Assignment 2 - Twitter
+* date last modified: 11/7/2016
+*
+* purpose: Main class to be used to test the Twitter program. Simply calls the init() method of @AdminPanel.
+*
+****************************************************************/ 
 package twitter;
 
-/**
- *
- * @author Colin
- */
 public class Driver {
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         // TODO code application logic here
         AdminPanel.getInstance().init();
     }
-    
 }

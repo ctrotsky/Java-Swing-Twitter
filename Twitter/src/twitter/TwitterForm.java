@@ -1,21 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/***************************************************************
+* file: TwitterForm.java
+* author: Colin Trotter
+* class: CS 356 – Object-Oriented Design and Programming
+*
+* assignment: Assignment 2 - Twitter
+* date last modified: 11/7/2016
+*
+* purpose: Abstract class representing a JFrame of the Twitter program. Provides methods to stylize
+* JComponents in a unified style between different implementations of TwitterForm.
+****************************************************************/ 
 package twitter;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-/**
- *
- * @author Colin
- */
 public abstract class TwitterForm extends JFrame implements ActionListener {
     
-        /*
+    /*
     * FUNCTION: buttonLayout()
     *
     * Modifies a button with the specified parameters and a hardcoded style.
@@ -108,5 +110,13 @@ public abstract class TwitterForm extends JFrame implements ActionListener {
         l.setBounds(posX,posY,width,height);
     }
     
+    /*
+    * FUNCTION: errorMessage()
+    * 
+    * Displays an error message with the given text.
+    */
+    public void errorMessage(String messageTitle, String messageText){
+        JOptionPane.showMessageDialog(this, messageText, messageTitle, JOptionPane.ERROR_MESSAGE);
+    }
     
 }

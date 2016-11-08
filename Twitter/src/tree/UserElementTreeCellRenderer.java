@@ -1,8 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/***************************************************************
+* file: UserElementTreeCellRenderer.java
+* author: Colin Trotter
+* class: CS 356 – Object-Oriented Design and Programming
+*
+* assignment: Assignment 2 - Twitter
+* date last modified: 11/7/2016
+*
+* purpose: TreeCellRenderer implementation to be used with a UserElementTreeModel. Allows for custom icons
+* depending on the image URL returned by each UserElement's iconURL method.
+*
+****************************************************************/ 
 package tree;
 
 import java.awt.Color;
@@ -16,17 +23,24 @@ import javax.swing.JTree;
 import javax.swing.tree.TreeCellRenderer;
 import twitter.UserElement;
 
-/**
- *
- * @author Colin
- */
 public class UserElementTreeCellRenderer implements TreeCellRenderer {
-    private JLabel label;
+    private JLabel label;   //The JLabel that displays the name and icon for the UserElement
 
+    /*
+    * CONSTRUCTOR: UserElementTreeCellRenderer()
+    * 
+    * Initializes the JLabel that will display information about the UserElement in the JTree.
+    */
     public UserElementTreeCellRenderer() {
         label = new JLabel();
     }
 
+    /*
+    * FUNCTION: getTreeCellRendererComponent()
+    * 
+    * Will return a component with an icon and name for the given value to display in the JTree, 
+    * as well as highlighting the value if it is selected.
+    */
     @Override
     public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded,
                                                   boolean leaf, int row, boolean hasFocus) {
