@@ -14,6 +14,7 @@ package tree;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.Image;
 import java.net.URL;
 import javax.swing.BorderFactory;
@@ -21,6 +22,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTree;
 import javax.swing.tree.TreeCellRenderer;
+import twitter.Group;
 import twitter.UserElement;
 
 public class UserElementTreeCellRenderer implements TreeCellRenderer {
@@ -55,6 +57,12 @@ public class UserElementTreeCellRenderer implements TreeCellRenderer {
             }
             else {
                 label.setOpaque(false);
+            }
+            if (userElem instanceof Group){
+                label.setFont(new Font("SANS_SERIF", Font.BOLD, 12));
+            }
+            else {
+                label.setFont(new Font("SANS_SERIF", Font.PLAIN, 12));
             }
 
         return label;
