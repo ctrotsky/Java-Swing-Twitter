@@ -22,15 +22,20 @@ public class User extends Subject implements Observer, UserElement{
     private ArrayList<String> newsFeed;
     private UserView userView;
     private final String iconURL = "/resources/user_icon.png";
+    private ArrayList<User> following;
     
     public User(UserElementTreeModel treeModel, String uniqueID){
         this.treeModel = treeModel;
         this.uniqueID = uniqueID;
-        attach(this);
+        
         userView = new UserView(this);
         tweets = new ArrayList();
         newsFeed = new ArrayList();
+        following = new ArrayList();
+        
         userView.init();
+        attach(this);
+        following.add(this);
     }
     
     public String getLatestTweet(){
@@ -64,8 +69,9 @@ public class User extends Subject implements Observer, UserElement{
     public boolean followUser(String userID){
         User followUser = (User) treeModel.findUserByID((UserElement) treeModel.getRoot(), userID);
         
-        if (followUser != null){
+        if (followUser != null && !following.contains(followUser)){
             followUser.attach(this);
+            following.add(followUser);
             return true;
         }
         else {

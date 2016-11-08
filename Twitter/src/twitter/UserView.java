@@ -163,7 +163,7 @@ public class UserView extends TwitterForm {
                 followingListModel.add(0, followUserID);
             }
             else {
-                JOptionPane.showMessageDialog(this, "Error: User " + followUserID + " does not exist.", "User does not exist", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error: Could not follow User " + followUserID + ".", "Follow Failed", JOptionPane.ERROR_MESSAGE);
             }
             followUserIDTextField.setText("");
         }
