@@ -1,2 +1,2 @@
 # Java-Swing-Twitter
-This is an offline twitter-like app that was created for practice with Java Swing and the four main object oriented design patterns.
+This is an offline twitter-like app that was created for practice with Java Swing and four of the main object oriented design patterns (Visitor, Observer, Composite, Singleton). There is a Singleton Admin Panel which can create new Users or Groups. Users and Groups use the composite pattern, allowing Groups to contain other Groups or Users. Users use the observer pattern to 'follow' other Users, and are updated when those Users post 'tweets'. The Visitor pattern is used for analysis of the Users, Groups, and their Tweets in a series of buttons on the Admin Panel.
