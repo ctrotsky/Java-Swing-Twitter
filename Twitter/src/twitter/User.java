@@ -33,7 +33,7 @@ public class User extends Subject implements Observer, UserElement{
     private ArrayList<User> following;                              //ArrayList containing Users this User is following.
     
     /*
-    * Constructor: User(UserElementTreeModel treeModel, Strin uniqueID)
+    * CONSTRUCTOR: User(UserElementTreeModel treeModel, Strin uniqueID)
     * 
     * Constructs an instance with a reference to the tree model it is contained in, as well as a String containnig
     * this User's unique ID. Initializes variables, and initializes the userView. Also attaches this user as an observer
