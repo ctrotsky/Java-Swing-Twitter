@@ -5,6 +5,8 @@
  */
 package twitter;
 
+import observer.Observer;
+import observer.Subject;
 import tree.UserElementTreeModel;
 import visitor.Visitor;
 import java.util.ArrayList;
