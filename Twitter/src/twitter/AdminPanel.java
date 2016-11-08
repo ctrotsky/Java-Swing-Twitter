@@ -1,5 +1,6 @@
 package twitter;
 
+import tree.*;
 import visitor.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

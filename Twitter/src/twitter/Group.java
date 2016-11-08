@@ -1,5 +1,6 @@
 package twitter;
 
+import tree.UserElementTreeModel;
 import visitor.Visitor;
 import java.util.ArrayList;
 
