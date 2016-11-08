@@ -22,34 +22,40 @@ import javax.swing.*;
 
 public class AdminPanel extends TwitterForm implements ActionListener{
 
-    private static AdminPanel INSTANCE;
+    private static AdminPanel INSTANCE;     //Singleton Instance of AdminPanel
     
-    private JLabel formTitle;
+    private JLabel formTitle;               //Label displaying title of form
     
-    private JPanel visitorButtonsPanel;
-    private JButton showUserTotal;
-    private JButton showGroupTotal;
-    private JButton showMessagesTotal;
-    private JButton showPositivePercentage;
-    private JLabel visitorButtonsTitle;
+    private JPanel analysisPanel;           //Panel containing buttons using Visitor pattern to analize tree view
+    private JButton showUserTotal;          //Button that will display the total number of users that are descendents of the selected UserElement
+    private JButton showGroupTotal;         //Button that will display the total number of groups that are descendents of the selected UserElement
+    private JButton showMessagesTotal;      //Button that will display the total number of messages posted by Users that are descendents of the selected UserElement
+    private JButton showPositivePercentage; //Button that will display the percentage of 'positive' messages that are posted by users that are descendents of the selected UserElement
+    private JLabel analysisTitle;           //Label displaying title of analysis panel
     
-    private JPanel treeViewPanel;
-    private UserElement rootGroup;
-    private UserElementTreeModel treeModel;
-    private UserElementTreeCellRenderer treeCellRenderer;
-    private JTree tree;
-    private JButton openUserView;
-    private JLabel treeViewTitle;
+    private JPanel treeViewPanel;           //Panel containing UserElement tree
+    private UserElement rootGroup;          //Root group of UserElement tree
+    private UserElementTreeModel treeModel; //Tree model that contains UserElements and methods to manage them
+    private JTree tree;                     //JTree to display treeModel
+    private JButton openUserView;           //Button to open the UserView of the selected UserElement
+    private JLabel treeViewTitle;           //Label displaying title of Tree View panel
+    private JScrollPane treeScrollPane;     //Scroll pane to hold tree
     
-    private JPanel userGroupManagementPanel;
-    private JButton addUser;
-    private JButton addGroup;
-    private JTextField userID;
-    private JTextField groupID;
-    private JLabel userIDLabel;
-    private JLabel groupIDLabel;
-    private JLabel userGroupManagementTitle;
+    private JPanel userGroupManagementPanel;//Panel to manage adding new Users and Groups
+    private JButton addUser;                //Button that will add a new User as a child of the selected UserElement
+    private JButton addGroup;               //Button that will add a new Group as a child of the selected UserElement
+    private JTextField userID;              //UniqueID for the new User to have
+    private JTextField groupID;             //UniqueID for the new Group to have
+    private JLabel userIDLabel;             //Label to describe userID text field
+    private JLabel groupIDLabel;            //Label to describe groupID text field
+    private JLabel userGroupManagementTitle;//Label displaying title of User/Group Management panel
     
+    /*
+    * CONSTRUCTOR: AdminPanel
+    * 
+    * Private constructor for AdminPanel. Only able to be called from within this class. Allows for Singleton
+    * design pattern. This constructor can only be called one time when the program runs.
+    */
     private AdminPanel(){
         System.out.println("Admin Panel Constructed");
     }
@@ -57,7 +63,8 @@ public class AdminPanel extends TwitterForm implements ActionListener{
     /*
     * FUNCTION: getInstance()
     * 
-    * Returns the singleton INSTANCE of AdminPanel.
+    * Returns the singleton INSTANCE of AdminPanel. If INSTANCE has not been instantiated yet, the constructor
+    * will be called. Constructor will only be called one time. This is thread safe.
     */
     public static AdminPanel getInstance(){
         if (INSTANCE == null){
@@ -94,30 +101,31 @@ public class AdminPanel extends TwitterForm implements ActionListener{
         // Visitor Buttons Panel
         // =========================================
         // Buttons: showUserTotal, showGroupTotal, showMessagesTotal, showPositivePercentage
-        // Labels: visitorButtonsTitle
+        // Labels: analysisTitle
         /////////////////////////////////////////////
-        visitorButtonsPanel = new JPanel();
-        panelLayout(visitorButtonsPanel, 230, 230, 350, 130);
+        analysisPanel = new JPanel();
+        panelLayout(analysisPanel, 230, 230, 350, 130);
         
         showUserTotal = new JButton("Show User Total");
-        buttonLayout(showUserTotal, 10, 40, 160, 35, visitorButtonsPanel);
+        buttonLayout(showUserTotal, 10, 40, 160, 35, analysisPanel);
         
         showGroupTotal = new JButton("Show Group Total");
-        buttonLayout(showGroupTotal, 180, 40, 160, 35, visitorButtonsPanel);
+        buttonLayout(showGroupTotal, 180, 40, 160, 35, analysisPanel);
         
         showMessagesTotal = new JButton("Show Messages Total");
-        buttonLayout(showMessagesTotal, 10, 85, 160, 35, visitorButtonsPanel);
+        buttonLayout(showMessagesTotal, 10, 85, 160, 35, analysisPanel);
         
         showPositivePercentage = new JButton("Show Positive Percentage");
-        buttonLayout(showPositivePercentage, 180, 85, 160, 35, visitorButtonsPanel);
+        buttonLayout(showPositivePercentage, 180, 85, 160, 35, analysisPanel);
         
-        visitorButtonsTitle = new JLabel("Analysis Features");
-        titleLayout(visitorButtonsTitle, 0, 5, 350, 30);
-        visitorButtonsPanel.add(visitorButtonsTitle);
+        analysisTitle = new JLabel("Analysis Features");
+        titleLayout(analysisTitle, 0, 5, 350, 30);
+        analysisPanel.add(analysisTitle);
         
         /////////////////////////////////////////////
         // Tree View Panel
         // =========================================
+        // Panes: treeScrollPane
         // Trees: tree
         // Buttons: openUserView 
         // Labels: treeViewTitle
@@ -128,11 +136,13 @@ public class AdminPanel extends TwitterForm implements ActionListener{
         rootGroup = new Group(treeModel, "Root");
         treeModel = new UserElementTreeModel(rootGroup);
         tree = new JTree(treeModel);
-        treeCellRenderer = new UserElementTreeCellRenderer();
-        tree.setCellRenderer(treeCellRenderer);
+        tree.setCellRenderer(new UserElementTreeCellRenderer());
         
-        treeLayout(tree, 10, 40, 190, 255);
-        treeViewPanel.add(tree);
+        treeLayout(tree, 0, 0, 190, 255);
+
+        treeScrollPane = new JScrollPane(tree);
+        treeScrollPane.setBounds(10, 40, 190, 255);
+        treeViewPanel.add(treeScrollPane);
         
         openUserView = new JButton("Open User View");
         buttonLayout(openUserView, 10, 305, 190, 35, treeViewPanel);
@@ -142,7 +152,7 @@ public class AdminPanel extends TwitterForm implements ActionListener{
         treeViewPanel.add(treeViewTitle);
         
         
-        add(visitorButtonsPanel);
+        add(analysisPanel);
         
         /////////////////////////////////////////////
         // User/Group Management Panel
