@@ -5,7 +5,7 @@
  */
 package twitter;
 
-import Visitor.Visitor;
+import visitor.Visitor;
 import java.util.ArrayList;
 
 /**

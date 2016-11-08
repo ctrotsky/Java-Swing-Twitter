@@ -1,12 +1,10 @@
 package twitter;
 
-import Visitor.*;
+import visitor.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import javax.swing.tree.DefaultTreeCellRenderer;
-import javax.swing.tree.TreeCellRenderer;
 
 public class AdminPanel extends TwitterForm implements ActionListener{
 

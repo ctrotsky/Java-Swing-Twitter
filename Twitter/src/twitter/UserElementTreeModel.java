@@ -5,7 +5,8 @@
  */
 package twitter;
 
-import Visitor.*;
+import visitor.FindUserVisitor;
+import visitor.FindGroupVisitor;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.event.TreeModelEvent;

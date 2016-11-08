@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Visitor;
+package visitor;
 
 import twitter.Group;
 import twitter.User;
@@ -12,14 +12,14 @@ import twitter.User;
  *
  * @author Colin
  */
-public class MessagesTotalVisitor implements Visitor {
+public class UserTotalVisitor implements Visitor {
     
     public int total;
 
     @Override
     public void atUser(User e) {
-        System.out.println("Counted messages from User: " + e.getUniqueID());
-        total+= e.getTweets().size();
+        System.out.println("Counted User: " + e.getUniqueID());
+        total++;
     }
 
     @Override
