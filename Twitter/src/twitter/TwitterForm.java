@@ -18,11 +18,11 @@ import javax.swing.*;
 public abstract class TwitterForm extends JFrame implements ActionListener {
     
     /*
-    * FUNCTION: buttonLayout()
+    * FUNCTION: styleButton()
     *
     * Modifies a button with the specified parameters and a hardcoded style.
     */
-    protected void buttonLayout(JButton b, int posX, int posY, int width, int height, JPanel panel) {
+    protected void styleButton(JButton b, int posX, int posY, int width, int height) {
         b.setBounds(posX, posY, width, height);
         b.setHorizontalTextPosition(JButton.CENTER);
         b.setVerticalTextPosition(JButton.CENTER);
@@ -34,7 +34,17 @@ public abstract class TwitterForm extends JFrame implements ActionListener {
         b.setContentAreaFilled(false);
         b.setOpaque(true);
         b.setFont(new Font("SANS_SERIF", Font.BOLD, 12));
-
+        addButtonMouseListener(b);
+        b.addActionListener(this);
+    }
+    
+    /*
+    * FUNCTION: addButtonMouseListener()
+    *
+    * Adds a mouse listner with the required methods to JButton b. Gives the button a specified style when
+    * moused over and clicked.
+    */
+    private void addButtonMouseListener(JButton b){
         b.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -66,18 +76,15 @@ public abstract class TwitterForm extends JFrame implements ActionListener {
                     b.setBackground(c);
                 }
             }
-        ;
         });
-        b.addActionListener(this);
-        panel.add(b);
     }
     
     /*
-    * FUNCTION: panelLayout()
+    * FUNCTION: stylePanel()
     *
     * Modifies a panel with specified parameters and hardcoded style.
     */
-    protected void panelLayout(JPanel p, int posX, int posY, int width, int height) {
+    protected void stylePanel(JPanel p, int posX, int posY, int width, int height) {
         p.setBounds(posX, posY, width, height);
         p.setLayout(null);
         p.setBackground(Color.LIGHT_GRAY);
@@ -87,11 +94,11 @@ public abstract class TwitterForm extends JFrame implements ActionListener {
     }
     
     /*
-    * FUNCTION: treeLayout()
+    * FUNCTION: styleTree()
     *
     * Modifies a panel with specified parameters and hardcoded style.
     */
-    protected void treeLayout(JTree t, int posX, int posY, int width, int height) {
+    protected void styleTree(JTree t, int posX, int posY, int width, int height) {
         t.setBounds(posX, posY, width, height);
         t.setLayout(null);
         t.setBackground(Color.WHITE);
@@ -100,11 +107,11 @@ public abstract class TwitterForm extends JFrame implements ActionListener {
     }
     
     /*
-    * FUNCTION: titleLayout()
+    * FUNCTION: styleTitleLabel()
     *
     * Modifies a panel with specified parameters and hardcoded style.
     */
-    protected void titleLayout(JLabel l, int posX, int posY, int width, int height) {
+    protected void styleTitleLabel(JLabel l, int posX, int posY, int width, int height) {
         l.setHorizontalAlignment(SwingConstants.CENTER);
         l.setFont(new Font("SANS_SERIF", Font.BOLD, 16));
         l.setBounds(posX,posY,width,height);

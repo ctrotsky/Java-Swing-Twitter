@@ -79,17 +79,18 @@ public class UserView extends TwitterForm {
         // Text Fields: followUserIDTextField
         /////////////////////////////////////////////
         followingPanel = new JPanel();
-        panelLayout(followingPanel, 10, 60, 375, 210);
+        stylePanel(followingPanel, 10, 60, 375, 210);
         
         followUser = new JButton("Follow User");
-        buttonLayout(followUser, 205, 50, 160, 35, followingPanel);
+        styleButton(followUser, 205, 50, 160, 35);
+        followingPanel.add(followUser);
         
         followUserIDLabel = new JLabel("User ID:");
         followUserIDLabel.setBounds(10, 36, 160, 15);
         followingPanel.add(followUserIDLabel);
         
         followingTitle = new JLabel("Following:");
-        titleLayout(followingTitle, 0, 5, 365, 30);
+        styleTitleLabel(followingTitle, 0, 5, 365, 30);
         followingPanel.add(followingTitle);
         
         followUserIDTextField = new JTextField();
@@ -113,17 +114,18 @@ public class UserView extends TwitterForm {
         // TextFields: tweetTextField
         /////////////////////////////////////////////
         newsFeedPanel = new JPanel();
-        panelLayout(newsFeedPanel, 10, 280, 375, 260);
+        stylePanel(newsFeedPanel, 10, 280, 375, 260);
         
         postTweet = new JButton("Post Tweet");
-        buttonLayout(postTweet, 205, 50, 160, 35, newsFeedPanel);
+        styleButton(postTweet, 205, 50, 160, 35);
+        newsFeedPanel.add(postTweet);
         
         tweetLabel = new JLabel("New Tweet:");
         tweetLabel.setBounds(10, 36, 160, 15);
         newsFeedPanel.add(tweetLabel);
         
         newsFeedTitle = new JLabel("News Feed:");
-        titleLayout(newsFeedTitle, 0, 5, 365, 30);
+        styleTitleLabel(newsFeedTitle, 0, 5, 365, 30);
         newsFeedPanel.add(newsFeedTitle);
         
         tweetTextField = new JTextField();

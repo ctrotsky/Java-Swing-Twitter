@@ -104,22 +104,26 @@ public class AdminPanel extends TwitterForm implements ActionListener{
         // Labels: analysisTitle
         /////////////////////////////////////////////
         analysisPanel = new JPanel();
-        panelLayout(analysisPanel, 230, 230, 350, 130);
+        stylePanel(analysisPanel, 230, 230, 350, 130);
         
         showUserTotal = new JButton("Show User Total");
-        buttonLayout(showUserTotal, 10, 40, 160, 35, analysisPanel);
+        styleButton(showUserTotal, 10, 40, 160, 35);
+        analysisPanel.add(showUserTotal);
         
         showGroupTotal = new JButton("Show Group Total");
-        buttonLayout(showGroupTotal, 180, 40, 160, 35, analysisPanel);
+        styleButton(showGroupTotal, 180, 40, 160, 35);
+        analysisPanel.add(showGroupTotal);
         
         showMessagesTotal = new JButton("Show Messages Total");
-        buttonLayout(showMessagesTotal, 10, 85, 160, 35, analysisPanel);
+        styleButton(showMessagesTotal, 10, 85, 160, 35);
+        analysisPanel.add(showMessagesTotal);
         
         showPositivePercentage = new JButton("Show Positive Percentage");
-        buttonLayout(showPositivePercentage, 180, 85, 160, 35, analysisPanel);
+        styleButton(showPositivePercentage, 180, 85, 160, 35);
+        analysisPanel.add(showPositivePercentage);
         
         analysisTitle = new JLabel("Analysis Features");
-        titleLayout(analysisTitle, 0, 5, 350, 30);
+        styleTitleLabel(analysisTitle, 0, 5, 350, 30);
         analysisPanel.add(analysisTitle);
         
         /////////////////////////////////////////////
@@ -131,24 +135,25 @@ public class AdminPanel extends TwitterForm implements ActionListener{
         // Labels: treeViewTitle
         /////////////////////////////////////////////  
         treeViewPanel = new JPanel();
-        panelLayout(treeViewPanel, 10, 10, 210, 351);
+        stylePanel(treeViewPanel, 10, 10, 210, 351);
         
         rootGroup = new Group(treeModel, "Root");
         treeModel = new UserElementTreeModel(rootGroup);
         tree = new JTree(treeModel);
         tree.setCellRenderer(new UserElementTreeCellRenderer());
         
-        treeLayout(tree, 0, 0, 190, 255);
+        styleTree(tree, 0, 0, 190, 255);
 
         treeScrollPane = new JScrollPane(tree);
         treeScrollPane.setBounds(10, 40, 190, 255);
         treeViewPanel.add(treeScrollPane);
         
         openUserView = new JButton("Open User View");
-        buttonLayout(openUserView, 10, 305, 190, 35, treeViewPanel);
+        styleButton(openUserView, 10, 305, 190, 35);
+        treeViewPanel.add(openUserView);
         
         treeViewTitle = new JLabel("Active Users");
-        titleLayout(treeViewTitle, 0, 5, 210, 30);
+        styleTitleLabel(treeViewTitle, 0, 5, 210, 30);
         treeViewPanel.add(treeViewTitle);
         
         
@@ -162,13 +167,15 @@ public class AdminPanel extends TwitterForm implements ActionListener{
         // Labels: userIDLabel, groupIDLabel, userGroupManagementTitle
         /////////////////////////////////////////////
         userGroupManagementPanel = new JPanel();
-        panelLayout(userGroupManagementPanel, 230, 70, 350, 150);
+        stylePanel(userGroupManagementPanel, 230, 70, 350, 150);
         
         addUser = new JButton("Add User");
-        buttonLayout(addUser, 180, 50, 160, 35, userGroupManagementPanel);
+        styleButton(addUser, 180, 50, 160, 35);
+        userGroupManagementPanel.add(addUser);
         
         addGroup = new JButton("Add Group");
-        buttonLayout(addGroup, 180, 105, 160, 35, userGroupManagementPanel);
+        styleButton(addGroup, 180, 105, 160, 35);
+        userGroupManagementPanel.add(addGroup);
         
         userID = new JTextField();
         userID.setBounds(10, 50, 160, 35);
@@ -187,7 +194,7 @@ public class AdminPanel extends TwitterForm implements ActionListener{
         userGroupManagementPanel.add(groupIDLabel);
         
         userGroupManagementTitle = new JLabel("User / Group Management");
-        titleLayout(userGroupManagementTitle, 0, 5, 350, 30);
+        styleTitleLabel(userGroupManagementTitle, 0, 5, 350, 30);
         userGroupManagementPanel.add(userGroupManagementTitle);
     
         setVisible(true);
